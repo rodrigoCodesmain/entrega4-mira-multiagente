@@ -18,7 +18,7 @@ Responsable del registro · Rodrigo Guerrero.
 | Responsable de agentes y corridas | Definiciones de agentes y skills, prompts, traspasos y logs de ambas corridas. | Pendiente de recepción. |
 | Requisitos y representante del cliente | Especificación, aclaraciones con fuente o supuesto y aprobación humana. | Recibido y aprobado en Control Humano 1 (2026-11-22, Jorge): [01-requisitos.md](../specs/01-requisitos.md) y [001-requisitos-a-planificador.md](trabajo/001-requisitos-a-planificador.md). |
 | Planificador y persona revisora del plan | Plan, tareas y registro del segundo control humano. | Plan recibido y **aprobado con observaciones en Control Humano 2** (2026-11-22, responsable técnico humano): [02-plan.md](../specs/02-plan.md), [03-trazabilidad.md](../specs/03-trazabilidad.md) y [002-planificador-a-implementador.md](trabajo/002-planificador-a-implementador.md). |
-| Implementador y Revisor QA | Código, pruebas ejecutadas, dictamen y evidencia de correcciones cuando corresponda. | Pendiente de recepción. |
+| Implementador y Revisor QA | Código, pruebas ejecutadas, dictamen y evidencia de correcciones cuando corresponda. | Entrega del `implementador` (iteración `0/2`) recibida el 2026-11-22 (`46 passed, 0 failed, 0 skipped`): [003-implementador-a-revisor.md](trabajo/003-implementador-a-revisor.md), [pytest-iter0.log](evidencia/pytest-iter0.log), [03-trazabilidad.md](../specs/03-trazabilidad.md); pendiente auditoría del `revisor`. |
 | Jorge | Matriz de criterio a prueba y revisión independiente de resultados. | Pendiente de recepción. |
 
 Las filas de esta tabla se actualizan cuando llega un archivo verificable. Registrar el detalle del intercambio en [traspasos](trabajo/README.md) y el commit o referencia de la versión recibida.
@@ -27,7 +27,7 @@ Las filas de esta tabla se actualizan cuando llega un archivo verificable. Regis
 
 | Registro | Estado | Destino de la evidencia |
 | --- | --- | --- |
-| Corrida multiagente | Sin ejecución registrada. | [Evidencia multiagente](evidencia/README.md) |
+| Corrida multiagente | Fase 3 (`implementador`, iteración `0/2`) ejecutada el 2026-11-22 sobre `7c0e152` (`46 passed`); pendiente auditoría del `revisor`. | [evidencia/pytest-iter0.log](evidencia/pytest-iter0.log) · [003-implementador-a-revisor.md](trabajo/003-implementador-a-revisor.md) |
 | Comparación con un agente | Sin ejecución registrada. | [Línea base](linea-base/README.md) |
 | Aprobación humana de la especificación | Aprobado — Control Humano 1 (2026-11-22, Jorge). Fase de planificación desbloqueada; listo para commit humano independiente. | [001-requisitos-a-planificador.md](trabajo/001-requisitos-a-planificador.md) · [01-requisitos.md](../specs/01-requisitos.md) |
 | Control humano del plan | Aprobado con observaciones — Control Humano 2 (2026-11-22, responsable técnico humano). Correcciones documentales aplicadas; listo para commit humano previo a implementación. | [002-planificador-a-implementador.md](trabajo/002-planificador-a-implementador.md) · [02-plan.md](../specs/02-plan.md) · [03-trazabilidad.md](../specs/03-trazabilidad.md) |
@@ -70,3 +70,18 @@ Al incorporar una ejecución, anotar el ID y modalidad de la corrida, fecha y ho
 - **Evidencia de verificación documental:** `python3 .agents/skills/trazabilidad/scripts/verificar_trazabilidad.py --check-kit --matrix specs/03-trazabilidad.md` (código de salida `0`; todas las pruebas permanecen como `Planificado (no ejecutado)`).
 - **Referencias:** [02-plan.md](../specs/02-plan.md#L246-L256) · [002-planificador-a-implementador.md](trabajo/002-planificador-a-implementador.md#L55-L73)
 - **Efecto:** Planificación aprobada; habilita el paso al agente `implementador` tras el commit humano de Control Humano 2.
+
+## Ejecución Fase 3 · Implementador (Iteración 0/2)
+
+- **Fecha y hora (Chile):** 2026-11-22 (inicio 19:23, término 19:30)
+- **Commit inicial:** `7c0e152`
+- **Herramienta y modalidad:** Antigravity (`agy 1.5.14`, Orchestrator Neon) vía `invoke_subagent` (`implementador`, `conversationId: 30625f4b-c3db-4582-8621-966a1524504a`)
+- **Skills utilizadas:** `ejecucion-pruebas` ([SKILL.md](../.agents/skills/ejecucion-pruebas/SKILL.md) y [run_tests.sh](../.agents/skills/ejecucion-pruebas/scripts/run_tests.sh)) y `trazabilidad` ([SKILL.md](../.agents/skills/trazabilidad/SKILL.md) y [verificar_trazabilidad.py](../.agents/skills/trazabilidad/scripts/verificar_trazabilidad.py))
+- **Entradas:** [01-requisitos.md](../specs/01-requisitos.md), [02-plan.md](../specs/02-plan.md), [03-trazabilidad.md](../specs/03-trazabilidad.md), [002-planificador-a-implementador.md](trabajo/002-planificador-a-implementador.md), [AGENTS.md](../AGENTS.md) y normas/datos vigentes del kit CU-2
+- **Salidas generadas:** `pyproject.toml`, `src/mira_reproceso/{__init__,models,loader,rules,api}.py`, `tests/{test_rules,test_api}.py`, [pytest-iter0.log](evidencia/pytest-iter0.log), [03-trazabilidad.md](../specs/03-trazabilidad.md) y [003-implementador-a-revisor.md](trabajo/003-implementador-a-revisor.md)
+- **Comandos de verificación ejecutados:**
+  - `uv venv .venv && uv pip install --python .venv/bin/python -e ".[dev]"` → código de salida `0` (`CPython 3.12.14`)
+  - `bash -o pipefail -c './.agents/skills/ejecucion-pruebas/scripts/run_tests.sh 2>&1 | tee docs/evidencia/pytest-iter0.log'` → código de salida `0`; `sha256sum -c docs/kit-sha256sums.txt`: **7/7 `OK`**; `pytest -p no:cacheprovider -v`: **`46 passed, 0 failed, 0 skipped, 1 warning in 1.09s`** (`StarletteDeprecationWarning` en `fastapi/testclient.py` sobre `httpx`/`httpx2`)
+  - `PYTHONDONTWRITEBYTECODE=1 python3 .agents/skills/trazabilidad/scripts/verificar_trazabilidad.py --check-kit --matrix specs/03-trazabilidad.md` → código de salida `0`
+- **Tokens / costo:** No informado por la herramienta (sin métricas inventadas)
+- **Estado:** **Detenido para revisión humana antes de invocar al agente `revisor`** (sin commits ni pushes)
