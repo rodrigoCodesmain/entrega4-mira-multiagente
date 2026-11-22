@@ -1,0 +1,21 @@
+# Traspaso 000: requisitos -> revisor (prueba mínima de invocación y traspaso)
+
+- **Fecha:** 2026-11-22 00:44
+- **Fase:** preparacion
+- **Agente origen:** requisitos
+- **Agente destino:** revisor
+- **Iteración de corrección:** 0/2
+- **Control humano requerido:** registro humano de dictamen
+- **Artefactos de entrada:**
+  - `kit/CU-2_soporte_operacion/corpus/CAT-ERR_v2_vigente.md`
+  - `docs/decision.md`
+  - `docs/trabajo/README.md`
+  - `.agents/skills/trazabilidad/SKILL.md`
+- **Artefactos producidos/actualizados:**
+  - `docs/trabajo/000-prueba-traspaso.md`
+- **Verificaciones ejecutadas:** Ninguna (el agente `requisitos` no ejecuta comandos de shell; verificación solo lectura delegada a `revisor`).
+- **Resumen y puntos abiertos:**
+  - Acta de prueba mínima de invocación y traspaso emitida por `requisitos` hacia `revisor` sin redactar `specs/` ni código.
+  - Se confirma que **`CAT-ERR` v2** (`kit/CU-2_soporte_operacion/corpus/CAT-ERR_v2_vigente.md`) está **Vigente** (desde el 1 de septiembre de 2026) y reemplaza a `CAT-ERR` versión 1.
+  - Se confirma que **`CAT-ERR` v1** (`kit/CU-2_soporte_operacion/corpus/CAT-ERR_v1_derogado.md`) está **derogado** y excluido como fuente normativa activa.
+  - Se espera lectura y emisión de dictamen por parte de `revisor` en la conversación para su registro humano.
