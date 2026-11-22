@@ -1,6 +1,6 @@
 # Especificación de Requisitos · MIRA CU-2 (Elegibilidad de reprocesamiento)
 
-- **Estado:** Pendiente de Control Humano 1 (revisión y aprobación del representante del cliente)
+- **Estado:** Aprobado — Control Humano 1 (aprobación del representante del cliente, Jorge, registrada el 2026-11-22)
 - **Enfoque metodológico:** Alternativa A (Desarrollo Conducido por Especificación, SDD sin GitHub SpecKit)
 - **Fuentes normativas vigentes:**
   - `MAN-INC` v2 (`kit/CU-2_soporte_operacion/corpus/MAN-INC_manual_incidentes.md`, vigente desde el 1 de agosto de 2026)
@@ -278,7 +278,7 @@ Escenario base evaluado con usuario autorizado (`U-S1` `soporte_n1`, `U-S2` `sop
 
 ---
 
-## 7. Definiciones adoptadas y puntos pendientes para Control Humano 1
+## 7. Definiciones adoptadas y resolución del Control Humano 1
 
 ### 7.1 Definiciones adoptadas tras la revisión inicial
 
@@ -292,13 +292,17 @@ Escenario base evaluado con usuario autorizado (`U-S1` `soporte_n1`, `U-S2` `sop
 4. **Cierre de exclusiones (sin alertas S2 ni alcance extra):** Queda cerrada la exclusión de alertas automáticas S2 (ni campos adicionales ni emisión automática de incidentes S2 para `C-039` o `C-037`) y de toda funcionalidad adicional (reprocesamiento real, frontend, RAG, MCP, notificaciones, administración de incidentes).
 5. **Validación simulada de roles:** La verificación mediante `usuario_id` contra `CU-2_datos.xlsx` se define explícitamente como una validación simulada de roles para el prototipo y no constituye autenticación real (sin verificación de identidad, contraseñas, tokens ni sesiones).
 
-### 7.2 Puntos pendientes de confirmación formal del representante del cliente (Control Humano 1)
+### 7.2 Resolución del Control Humano 1 (aprobado el 2026-11-22)
 
-Únicamente los siguientes puntos requieren confirmación formal explícita antes de invocar al agente `planificador`:
-
-1. **Aprobación de la especificación base:** Confirmar la aprobación de `specs/01-requisitos.md` para habilitar el pase a Fase 2 (`planificador`).
-2. **Ratificación del supuesto conservador para `E-512` en escenarios mixtos:** Ratificar formalmente el uso provisional del límite específico de `1` reproceso sobre `casos.reprocesos_realizados` como **contador global por caso** en escenarios mixtos con otros códigos de error (o indicar si se requerirá un contador desagregado por código de error dado que `MAN-INC` v2 §4 señala que los reprocesos por error interno no se contabilizan como validaciones).
-3. **Conformidad con `HTTP 403` para `usuario_id` inexistente y formato estándar de error HTTP:** Confirmar la conformidad con devolver `HTTP 403 Forbidden` (en lugar de `404`/`401`) cuando `usuario_id` no existe en `usuarios`, y con el uso del formato estándar de error HTTP (`{"detail": "..."}`) para `403`, `404` y `422` separado del contrato de evaluación de 4 campos.
+- **Representante del cliente:** Jorge
+- **Decisión:** Aprobado — Control Humano 1
+- **Fecha de registro:** 2026-11-22
+- **Evidencia:** Aprobación escrita por WhatsApp proporcionada por el equipo (registrada en `docs/trabajo/001-requisitos-a-planificador.md` y `docs/bitacora.md`).
+- **Decisiones confirmadas por el representante del cliente:**
+  1. **Aprobación:** Aprueba `specs/01-requisitos.md` tal como está, autorizando el paso al agente `planificador`.
+  2. **`E-512`:** Ratifica el máximo específico de un (`1`) reproceso y el uso de `casos.reprocesos_realizados` como contador global por caso, incluido el supuesto conservador para escenarios mixtos. Se mantiene el máximo general de tres (`3`) para `E-207` y `E-305`. La interpretación sobre validaciones/facturación queda identificada como supuesto del prototipo respaldado por esta aprobación, no como regla adicional inventada.
+  3. **Códigos HTTP:** Confirma `200` para evaluación válida, `403` para usuarios sin autorización o inexistentes, `404` para casos inexistentes y `422` para solicitudes malformadas, con errores HTTP estándar `{"detail": "..."}` separados del contrato de cuatro campos.
+- **Material revisado confirmado:** `MAN-INC` v2, `CAT-ERR` v2, `GUI-COL` v1, `POL-ACC` v1, los 10 casos del Excel (`C-031` a `C-040`) y los 14 escenarios sintéticos, incluida la protección frente a instrucciones maliciosas en `L-009`.
 
 ---
 

@@ -6,7 +6,7 @@
 - **Agente destino:** planificador
 - **Iteración de corrección:** 0/2
 - **Control humano requerido:** Control Humano 1 (especificacion)
-- **Estado de aprobación humana:** PENDIENTE DE APROBACIÓN (sin aprobar)
+- **Estado de aprobación humana:** Aprobado — Control Humano 1 (2026-11-22, Jorge)
 - **Artefactos de entrada:**
   - `.agents/skills/especificacion/SKILL.md`
   - `.agents/skills/especificacion/resources/plantilla-especificacion.md`
@@ -42,24 +42,29 @@
   3. **Ajuste 3 (Orden de evaluación y reserva de diagnóstico):** Se evalúa primero el rol del usuario antes de consultar o diagnosticar `caso_id`, sin exponer diagnósticos internos ni si el caso existe cuando hay rechazo `403`, manteniendo el reporte completo de todos los motivos bloqueantes concurrentes cuando usuario está autorizado y caso existe.
   4. **Ajuste 4 (Cierre de exclusiones):** Cerrada definitivamente la exclusión de alertas automáticas S2 (ni para `C-039` ni campos adicionales en `C-037`) y de cualquier funcionalidad fuera del alcance mínimo.
   5. **Ajuste 5 (Validación simulada de roles):** Aclarado en `§2`, `§3.2`, `REQ-03`, `§7.1` y `§8` que la validación por `usuario_id` contra `CU-2_datos.xlsx` es simulada para el prototipo y no constituye autenticación real.
-- **Puntos pendientes de confirmación formal en Control Humano 1:**
-  1. Aprobación formal de `specs/01-requisitos.md`.
-  2. Ratificación formal del supuesto conservador del prototipo para `E-512` en escenarios mixtos (`casos.reprocesos_realizados` como contador global por caso con tope de `1` reproceso).
-  3. Conformidad con `HTTP 403 Forbidden` para `usuario_id` inexistente y con el formato estándar de error HTTP (`{"detail": "..."}`) para `403`, `404` y `422`.
+- **Puntos confirmados en Control Humano 1 (2026-11-22):**
+  1. Aprobación de `specs/01-requisitos.md` tal como está, autorizando el paso al agente `planificador`.
+  2. Ratificación de `E-512`: máximo específico de `1` reproceso y uso de `casos.reprocesos_realizados` como contador global por caso (incluido supuesto conservador en escenarios mixtos), manteniendo máximo `3` para `E-207` y `E-305`, e identificando la interpretación sobre validaciones/facturación como supuesto del prototipo respaldado por esta aprobación.
+  3. Confirmación de códigos HTTP `200` (evaluación válida), `403` (usuarios sin autorización o inexistentes), `404` (casos inexistentes) y `422` (solicitudes malformadas), con errores HTTP estándar `{"detail": "..."}` separados del contrato de 4 campos.
 
-## Registro de Control Humano 1 (Pendiente de aprobación)
+## Registro de Control Humano 1 (Aprobado)
 
-- **Estado:** `PENDIENTE DE APROBACIÓN`
-- **Representante del cliente / Revisor humano:** `[Por completar]`
-- **Fecha de decisión:** `[Por completar]`
-- **Decisión:** `[ ] Aprobado` / `[ ] Aprobado con observaciones` / `[ ] Requiere ajustes`
+- **Estado:** `Aprobado — Control Humano 1`
+- **Representante del cliente:** Jorge
+- **Fecha de registro:** 2026-11-22
+- **Decisión:** `[x] Aprobado` / `[ ] Aprobado con observaciones` / `[ ] Requiere ajustes`
+- **Evidencia:** Aprobación escrita por WhatsApp proporcionada por el equipo.
+- **Material revisado confirmado:** `MAN-INC` v2, `CAT-ERR` v2, `GUI-COL` v1, `POL-ACC` v1, los 10 casos del Excel (`C-031` a `C-040`) y los 14 escenarios sintéticos, incluida la protección frente a instrucciones maliciosas en `L-009`.
+- **Decisiones confirmadas:**
+  1. **Aprobación:** Aprueba `specs/01-requisitos.md` tal como está y autoriza el paso al agente `planificador`.
+  2. **`E-512`:** Ratifica el máximo específico de `1` reproceso y el uso de `casos.reprocesos_realizados` como contador global por caso, incluido el supuesto conservador para escenarios mixtos. Mantiene el máximo general de `3` para `E-207` y `E-305`. La interpretación sobre validaciones/facturación queda identificada como supuesto del prototipo respaldado por esta aprobación, no como regla adicional inventada.
+  3. **Códigos HTTP:** Confirma `200` para evaluación válida, `403` para usuarios sin autorización o inexistentes, `404` para casos inexistentes y `422` para solicitudes malformadas, con errores HTTP estándar `{"detail": "..."}` separados del contrato de cuatro campos.
 - **Lista de verificación:**
-  - `[ ]` Alcance mínimo y exclusiones cerradas sin alertas S2 ni funcionalidades adicionales.
-  - `[ ]` Contrato `HTTP 200` exacto de 4 campos separado de errores HTTP estándar `403` / `404` / `422`.
-  - `[ ]` Evaluación prioritaria de rol simulado (no autenticación real) sin exponer diagnósticos internos ni existencia de casos ante `403`.
-  - `[ ]` Vigencia normativa exclusiva de `MAN-INC` v2 y `CAT-ERR` v2, excluyendo `CAT-ERR` v1 derogado.
-  - `[ ]` Supuesto conservador provisional de `E-512` (límite de `1` reproceso y uso de `casos.reprocesos_realizados` como contador global por caso).
-  - `[ ]` Seguridad de datos frente a inyección en `registro_tecnico` (`L-009` en `C-038`) e integridad de solo lectura de `kit/CU-2_soporte_operacion/`.
-- **Observaciones y confirmación del representante del cliente:** `[Por completar]`
+  - `[x]` Alcance mínimo y exclusiones cerradas sin alertas S2 ni funcionalidades adicionales.
+  - `[x]` Contrato `HTTP 200` exacto de 4 campos separado de errores HTTP estándar `403` / `404` / `422` (`{"detail": "..."}`).
+  - `[x]` Evaluación prioritaria de rol simulado (no autenticación real) sin exponer diagnósticos internos ni existencia de casos ante `403`.
+  - `[x]` Vigencia normativa exclusiva de `MAN-INC` v2 y `CAT-ERR` v2, excluyendo `CAT-ERR` v1 derogado.
+  - `[x]` Supuesto conservador de `E-512` ratificado (límite de `1` reproceso y `casos.reprocesos_realizados` como contador global por caso).
+  - `[x]` Seguridad de datos frente a inyección en `registro_tecnico` (`L-009` en `C-038`) e integridad de solo lectura de `kit/CU-2_soporte_operacion/`.
 
-> **Nota obligatoria de compuerta:** **No se invocará al agente `planificador`** ni se crearán `specs/02-plan.md` ni `specs/03-trazabilidad.md` hasta recibir confirmación explícita del representante del cliente registrada en este control humano.
+> **Nota obligatoria de compuerta:** Control Humano 1 **aprobado** el `2026-11-22`. La fase de planificación (`planificador`) queda desbloqueada tras registrar el commit humano independiente de aprobación de especificación.
