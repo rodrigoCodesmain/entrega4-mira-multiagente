@@ -28,8 +28,8 @@ El plan propone **Antigravity con Orchestrator Neon**, sujeto a verificar la con
 | Ruta | Qué contiene hoy y qué se guarda allí |
 | --- | --- |
 | [`AGENTS.md`](AGENTS.md) | Instrucciones del proyecto para los agentes, incluidos los controles humanos y el manejo de evidencias. |
-| [`.github/agents/`](.github/agents/) | Carpeta reservada para las cuatro definiciones `.agent.md`. Contiene `.gitkeep`. La ubicación efectiva se documentará si la herramienta usa otra ruta. |
-| [`.github/skills/`](.github/skills/) | Carpeta reservada para las tres skills, cada una con su `SKILL.md` y sus recursos. Contiene `.gitkeep`. |
+| [`.agents/agents/`](.agents/agents/) | Ubicación efectiva en Antigravity para los cuatro agentes personalizados (`requisitos.md`, `planificador.md`, `implementador.md`, `revisor.md`). `.github/agents/` permanece vacía (`.gitkeep`) como reserva inicial no utilizada. |
+| [`.agents/skills/`](.agents/skills/) | Ubicación efectiva en Antigravity para las tres skills propias (`especificacion`, `trazabilidad`, `ejecucion-pruebas`), cada una con su `SKILL.md` y recursos/scripts. `.github/skills/` permanece vacía (`.gitkeep`). |
 | [`docs/decision.md`](docs/decision.md) | Alcance, patrón, roles, herramientas previstas y control de commits y etiqueta. |
 | [`docs/bitacora.md`](docs/bitacora.md) | Preparación del repositorio e inventario de entregas pendientes. Aquí se registrarán las salidas recibidas, decisiones y resultados comprobados. |
 | [`docs/trabajo/`](docs/trabajo/README.md) | Índice de los seis traspasos previstos. Recibirá la especificación, las aclaraciones, las aprobaciones, el plan, las tareas y los dictámenes. |
