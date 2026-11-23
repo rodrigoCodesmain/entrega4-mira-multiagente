@@ -2,7 +2,7 @@
 
 - **Fecha de elaboración:** 2026-11-22
 - **Estado:** **Aprobado con ajustes metodológicos menores** (`2026-11-22`, responsable técnico humano)
-- **Commit base en el repositorio multiagente (`HEAD`):** `e998cca` (*docs: cerrar corrida multiagente con aprobacion humana final*)
+- **Commits de referencia:** `e9dd4f6` (implementación multiagente auditada en iteración `1/2`), `e998cca` (cierre de la corrida multiagente con aprobación humana final) y `014153e` (incorporación de la línea base y la comparación al repositorio)
 - **Documentos de referencia:** [`protocolo-comparacion.md`](protocolo-comparacion.md) · [`specs/01-requisitos.md`](../../specs/01-requisitos.md) · [`docs/bitacora.md`](../bitacora.md)
 - **Alcance temporal comparado:** Ambas corridas se comparan **a partir de `specs/01-requisitos.md` aprobada en Control Humano 1 (`0e47c1c`)**. Se excluyen explícitamente la Fase 1 previa (levantamiento normativo y redacción de requisitos por `requisitos`) y la espera de aprobación del Control Humano 1.
 
