@@ -164,6 +164,7 @@ def _seleccionar_accion_bloqueo(
     limite_alcanzado_general: bool,
     servicio_no_operativo_e207: bool,
     servicio_no_operativo_otro: bool,
+    servicio_no_operativo_e207_otro_id: str | None = None,
 ) -> str:
     if tiene_bloqueo_decision_final:
         return "No reprocesar; el caso ya cuenta con decisión final irreversible."
@@ -187,6 +188,11 @@ def _seleccionar_accion_bloqueo(
             "cuando SRV-MOD esté operativo."
         )
     if servicio_no_operativo_otro:
+        if servicio_no_operativo_e207_otro_id is not None:
+            return (
+                f"No reprocesar; esperar a que el servicio dependiente "
+                f"'{servicio_no_operativo_e207_otro_id}' vuelva a estar operativo."
+            )
         return "No reprocesar; esperar a que el servicio dependiente vuelva a estar operativo."
     return "No reprocesar; el caso no se encuentra en estado 'error' o 'detenido'."
 
@@ -219,6 +225,7 @@ def evaluar_elegibilidad(
     limite_alcanzado_general = False
     servicio_no_operativo_e207 = False
     servicio_no_operativo_otro = False
+    servicio_no_operativo_e207_otro_id: str | None = None
 
     # 3.1 Estado elegible del caso (MAN-INC v2 §4).
     if estado not in ESTADOS_ELEGIBLES:
@@ -267,23 +274,19 @@ def evaluar_elegibilidad(
     else:
         estado_srv_dep = servicio_dep.estado.strip().lower()
         if estado_srv_dep != "operativo":
-            if codigo_error == "E-207":
+            if codigo_error == "E-207" and servicio_dep.servicio_id == SERVICIO_MODELOS_ID:
                 servicio_no_operativo_e207 = True
-                if servicio_dep.servicio_id == SERVICIO_MODELOS_ID:
-                    motivos.append(
-                        f"El servicio dependiente '{SERVICIO_MODELOS_ID}' (requerido por E-207) "
-                        f"se encuentra en estado '{estado_srv_dep}' (se requiere estado 'operativo')."
-                    )
-                else:
-                    motivos.append(
-                        f"El servicio dependiente '{servicio_dep.servicio_id}' se encuentra en "
-                        f"estado '{estado_srv_dep}' (se requiere estado 'operativo')."
-                    )
+                motivos.append(
+                    f"El servicio dependiente '{SERVICIO_MODELOS_ID}' (requerido por E-207) "
+                    f"se encuentra en estado '{estado_srv_dep}' (se requiere estado 'operativo')."
+                )
                 _agregar_referencia(referencias, "MAN-INC v2 §4")
                 _agregar_referencia(referencias, "GUI-COL v1 §1")
                 _agregar_referencia(referencias, "CAT-ERR v2 §1 (E-207)")
             else:
                 servicio_no_operativo_otro = True
+                if codigo_error == "E-207":
+                    servicio_no_operativo_e207_otro_id = servicio_dep.servicio_id
                 motivos.append(
                     f"El servicio dependiente '{servicio_dep.servicio_id}' se encuentra en "
                     f"estado '{estado_srv_dep}' (se requiere estado 'operativo')."
@@ -382,6 +385,7 @@ def evaluar_elegibilidad(
         limite_alcanzado_general=limite_alcanzado_general,
         servicio_no_operativo_e207=servicio_no_operativo_e207,
         servicio_no_operativo_otro=servicio_no_operativo_otro,
+        servicio_no_operativo_e207_otro_id=servicio_no_operativo_e207_otro_id,
     )
     return ResultadoEvaluacion(
         puede_reprocesar=False,
