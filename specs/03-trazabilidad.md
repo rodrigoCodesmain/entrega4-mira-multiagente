@@ -1,6 +1,7 @@
 # Matriz de Trazabilidad Normativa · MIRA CU-2
 
-- **Estado:** Correcciones de ronda `1/2` completadas (`H-01`, `H-02`) — 48/48 casos de prueba `pytest` ejecutados y aprobados en [`docs/evidencia/pytest-iter1.log`](../docs/evidencia/pytest-iter1.log) (ronda previa `0/2`: 46/46 en [`docs/evidencia/pytest-iter0.log`](../docs/evidencia/pytest-iter0.log)); pendiente auditoría del `revisor`
+- **Estado:** Implementación completada, 48/48 pruebas `pytest` aprobadas en iteración `1/2` tras subsanar `H-01` y `H-02`, y auditoría independiente cerrada con dictamen **`APROBADO`** ([`docs/trabajo/006-revisor-final.md`](../docs/trabajo/006-revisor-final.md), commit `e998cca`) y revisión independiente conforme ([`docs/evidencia/revision-independiente-jorge.md`](../docs/evidencia/revision-independiente-jorge.md), commit `220c553`)
+- **Evidencia de ejecución y cierre:** [`docs/evidencia/pytest-iter0.log`](../docs/evidencia/pytest-iter0.log) (ronda `0/2`: 46/46), [`docs/evidencia/pytest-iter1.log`](../docs/evidencia/pytest-iter1.log) (ronda `1/2`: 48/48), [`docs/trabajo/006-revisor-final.md`](../docs/trabajo/006-revisor-final.md) (`e998cca`) y [`docs/evidencia/revision-independiente-jorge.md`](../docs/evidencia/revision-independiente-jorge.md) (`220c553`)
 - **Especificación aprobada:** [`specs/01-requisitos.md`](./01-requisitos.md) (`Aprobado — Control Humano 1`, 2026-11-22)
 - **Plan técnico asociado:** [`specs/02-plan.md`](./02-plan.md) (`Aprobado con observaciones — Control Humano 2`, 2026-11-22)
 - **Fuentes normativas activas:** `MAN-INC` v2, `CAT-ERR` v2, `GUI-COL` v1 (referencia auxiliar de servicios `SRV-*` sin alertas S2) y `POL-ACC` v1 (restricción de privacidad). El catálogo anterior derogado queda estrictamente excluido.
@@ -54,3 +55,9 @@
   - `H-01`: eliminadas las aserciones tautológicas de `SYN-INJ-OK` en `tests/test_rules.py` y `tests/test_api.py`; sustituidas por carga real de un `.xlsx` temporal en `tmp_path` con hoja `registro_tecnico` hostil vía `cargar_datos_excel()` → `evaluar_elegibilidad()` y `create_app()`, además de verificación explícita `HTTP 422` ante envío del campo extra `"registro_tecnico"`.
   - `H-02`: corregida la lógica de `E-207` en `src/mira_reproceso/rules.py` (`evaluar_elegibilidad` y `_seleccionar_accion_bloqueo`) para emitir recomendación sobre el servicio dependiente bloqueante real cuando `SRV-MOD` está `operativo`, manteniendo prioridad de `SRV-MOD` si también falla, con pruebas de regresión en `tests/test_rules.py` y `tests/test_api.py`.
 - **Log de evidencia:** [`docs/evidencia/pytest-iter1.log`](../docs/evidencia/pytest-iter1.log).
+
+### Cierre de auditoría independiente (Iteración `1/2`, refs. `e998cca` y `220c553`)
+
+- **Dictamen final del `revisor`:** **`APROBADO`** emitido por `revisor` (`conversationId: b7480979-17ff-4ea7-b780-30a0936b61b4`) sobre el commit `e9dd4f6` y registrado íntegramente en [`docs/trabajo/006-revisor-final.md`](../docs/trabajo/006-revisor-final.md), confirmando `H-01` (`RESUELTO`), `H-02` (`RESUELTO`) y `0` hallazgos nuevos.
+- **Aprobación humana de cierre (Fase 3):** Aceptada por Lester González el `2026-11-22` y publicada en el commit `e998cca`, sin necesidad de ronda `2/2`.
+- **Revisión independiente posterior (`2026-11-23`):** Verificada conforme en [`docs/evidencia/revision-independiente-jorge.md`](../docs/evidencia/revision-independiente-jorge.md) (commit `220c553`) tras contraste directo de `CA-01..CA-10`, los 10 casos del Excel y `verificar_trazabilidad.py` con `0` errores.

@@ -1,7 +1,7 @@
 # Protocolo de evaluación y comparación · MIRA CU-2
 
-- **Estado:** Protocolo preparado (sin ejecuciones ni métricas registradas; Control Humano 1 sigue pendiente de aprobación formal)
-- **Commit de referencia actual:** `15225bb`
+- **Estado:** Protocolo histórico diseñado previo a Control Humano 1 (`414d6e7`); **ejecutado y cerrado** en `CORRIDA-MA-01` (`e998cca`) y `CORRIDA-LB-01` (`014153e`, `cc9eb79`). Véanse los resultados ejecutados y el análisis comparativo final en [`comparacion-resultados.md`](comparacion-resultados.md) y [`../bitacora.md`](../bitacora.md).
+- **Commit de referencia de creación:** `414d6e7` (sobre base `15225bb`); commit base de ejecución: `0e47c1c` (`COMMIT_BASE_CH1`)
 - **Alineación:** [docs/linea-base/README.md](README.md) · [docs/evidencia/README.md](../evidencia/README.md) · [docs/bitacora.md](../bitacora.md) · [specs/01-requisitos.md](../../specs/01-requisitos.md)
 
 ---
@@ -117,3 +117,13 @@ Existe el riesgo de que la corrida de **Agente Único** lea o reutilice solucion
 | **R4 · Contexto residual de conversación** | Ejecutar la línea base en el mismo hilo donde se planificó o revisó la solución multiagente. | Iniciar una **conversación nueva** en Antigravity para cada corrida, sin usar menciones `@` a conversaciones o artefactos previos. |
 | **R5 · Rutas locales hermanas fuera del repo** | El agente único lee copias previas o paralelas en el sistema de archivos local. | Mantener restringido el acceso fuera del workspace (`Non-Workspace File Access`) y restringir explícitamente el alcance de trabajo al directorio aislado de la corrida. |
 | **R6 · Sesgo humano al redactar el prompt** | Ajustar el prompt de la línea base tras haber visto los fallos o hallazgos del sistema multiagente, filtrando pistas de diseño. | Congelar el prompt de la Sección 3 (Paso 1) **antes** de ejecutar la corrida multiagente, basándolo únicamente en `specs/01-requisitos.md`. |
+
+---
+
+## Nota de actualización post-ejecución (commits `014153e` y `cc9eb79`)
+
+El texto de las Secciones 1 a 6 se conserva íntegro como registro del diseño experimental formulado antes de aprobar Control Humano 1 (`0e47c1c`). Las corridas reales y su evaluación comparativa ya fueron ejecutadas, cerradas e integradas al repositorio:
+
+- **Resultados comparativos cerrados:** [`comparacion-resultados.md`](comparacion-resultados.md) (`CORRIDA-MA-01` cerrada en `e998cca` frente a `CORRIDA-LB-01` archivada en `014153e` / `cc9eb79`).
+- **Artefactos y evidencias de línea base:** [`CORRIDA-LB-01/prompt-ejecucion.md`](CORRIDA-LB-01/prompt-ejecucion.md), [`CORRIDA-LB-01/resultado.md`](CORRIDA-LB-01/resultado.md), [`CORRIDA-LB-01/metricas.md`](CORRIDA-LB-01/metricas.md), [`CORRIDA-LB-01/pytest.log`](CORRIDA-LB-01/pytest.log), [`CORRIDA-LB-01/codigo-agente-unico.tar.gz`](CORRIDA-LB-01/codigo-agente-unico.tar.gz) y [`CORRIDA-LB-01/workspace-aislado.png`](CORRIDA-LB-01/workspace-aislado.png).
+- **Desviaciones registradas durante la ejecución real:** tanto la ejecución de `CORRIDA-LB-01` posterior a `CORRIDA-MA-01` (mitigada externamente con `git archive 0e47c1c` en directorio separado, riesgo `R2`) como la ampliación estructurada de [`CORRIDA-LB-01/prompt-ejecucion.md`](CORRIDA-LB-01/prompt-ejecucion.md) (74 líneas) respecto del prompt mínimo congelado en la Sección 3 (10 líneas, riesgo `R6`) quedaron documentadas en [`comparacion-resultados.md §4`](comparacion-resultados.md#L79-L100) y [`../bitacora.md`](../bitacora.md).
